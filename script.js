@@ -93,18 +93,49 @@
 // SeriesSum(2) => 1 + 1/4 = "1.25"
 // SeriesSum(5) => 1 + 1/4 + 1/7 + 1/10 + 1/13 = "1.57"
 
-function SeriesSum(n) {
-    if (n === 0) {
-        return '0.00'
-    } else {
-      let sum = 1
-      for (let i = 1; i < n; i++) {
-          sum += 1 / (i * 3 + 1)
-      }
-      return sum.toFixed(2).toString()
-    }
-  }
+// function SeriesSum(n) {
+//     if (n === 0) {
+//         return '0.00'
+//     } else {
+//       let sum = 1
+//       for (let i = 1; i < n; i++) {
+//           sum += 1 / (i * 3 + 1)
+//       }
+//       return sum.toFixed(2).toString()
+//     }
+//   }
 
-console.log(SeriesSum(5))
+// console.log(SeriesSum(5))
+
+
+//***********************************************************************************************************************************
+
+
+// Two to One
+
+// Take 2 strings s1 and s2 including only letters from a to z. Return a new sorted string, the longest possible, containing distinct letters - each taken only once - coming from s1 or s2.
+
+// Examples:
+// a = "xyaabbbccccdefww"
+// b = "xxxxyyyyabklmopq"
+// longest(a, b) -> "abcdefklmopqwxy"
+
+// a = "abcdefghijklmnopqrstuvwxyz"
+// longest(a, a) -> "abcdefghijklmnopqrstuvwxyz"
+
+function longest(s1, s2) {
+  const combined = (s1 + s2).split('')
+  let sorted = new Array(26).fill('*')
+
+  for (let i = 0; i < combined.length; i++) {
+      let index = combined[i].charCodeAt(0) - 97
+    if (sorted[index] === '*') {
+        sorted[index] = combined[i]
+   }  
+  }
+  return sorted.join('').split('*').join('')
+}
+
+console.log(longest("xyaabbbccccdefww", "xxxxyyyyabklmopq"))
 
 //***********************************************************************************************************************************
