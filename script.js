@@ -123,19 +123,35 @@
 // a = "abcdefghijklmnopqrstuvwxyz"
 // longest(a, a) -> "abcdefghijklmnopqrstuvwxyz"
 
-function longest(s1, s2) {
-  const combined = (s1 + s2).split('')
-  let sorted = new Array(26).fill('*')
+// function longest(s1, s2) {
+//   const combined = (s1 + s2).split('')
+//   let sorted = new Array(26).fill('*')
 
-  for (let i = 0; i < combined.length; i++) {
-      let index = combined[i].charCodeAt(0) - 97
-    if (sorted[index] === '*') {
-        sorted[index] = combined[i]
-   }  
-  }
-  return sorted.join('').split('*').join('')
+//   for (let i = 0; i < combined.length; i++) {
+//       let index = combined[i].charCodeAt(0) - 97
+//     if (sorted[index] === '*') {
+//         sorted[index] = combined[i]
+//    }  
+//   }
+//   return sorted.join('').split('*').join('')
+// }
+
+// console.log(longest("xyaabbbccccdefww", "xxxxyyyyabklmopq"))
+
+//***********************************************************************************************************************************
+
+// Reverse words
+
+// Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained.
+
+// Examples
+// "This is an example!" ==> "sihT si na !elpmaxe"
+// "double  spaces"      ==> "elbuod  secaps"
+
+function reverseWords(str) {
+  return str.split(' ').map((word) => word.split('').reverse().join('')).join(' ')
 }
 
-console.log(longest("xyaabbbccccdefww", "xxxxyyyyabklmopq"))
+console.log(reverseWords("This is an example!"))
 
 //***********************************************************************************************************************************
