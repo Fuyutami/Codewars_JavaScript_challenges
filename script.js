@@ -148,10 +148,30 @@
 // "This is an example!" ==> "sihT si na !elpmaxe"
 // "double  spaces"      ==> "elbuod  secaps"
 
-function reverseWords(str) {
-  return str.split(' ').map((word) => word.split('').reverse().join('')).join(' ')
+// function reverseWords(str) {
+//   return str.split(' ').map((word) => word.split('').reverse().join('')).join(' ')
+// }
+
+// console.log(reverseWords("This is an example!"))
+
+//***********************************************************************************************************************************
+
+
+// Binary Addition
+
+// Implement a function that adds two numbers together and returns their sum in binary. The conversion can be done before, or after the addition.
+
+// The binary number returned should be a string.
+
+// Examples:
+
+// add_binary(1, 1) == "10" (1 + 1 = 2 in decimal or 10 in binary)
+// add_binary(5, 9) == "1110" (5 + 9 = 14 in decimal or 1110 in binary)
+
+function addBinary(a,b) {
+  return (a+b).toString(2)
 }
 
-console.log(reverseWords("This is an example!"))
+console.log(addBinary(5, 9))
 
 //***********************************************************************************************************************************
