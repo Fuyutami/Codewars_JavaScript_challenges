@@ -168,10 +168,42 @@
 // add_binary(1, 1) == "10" (1 + 1 = 2 in decimal or 10 in binary)
 // add_binary(5, 9) == "1110" (5 + 9 = 14 in decimal or 1110 in binary)
 
-function addBinary(a,b) {
-  return (a+b).toString(2)
+// function addBinary(a,b) {
+//   return (a+b).toString(2)
+// }
+
+// console.log(addBinary(5, 9))
+
+//***********************************************************************************************************************************
+
+
+// Human Readable Time
+
+// Write a function, which takes a non-negative integer (seconds) as input and returns the time in a human-readable format (HH:MM:SS)
+
+// HH = hours, padded to 2 digits, range: 00 - 99
+// MM = minutes, padded to 2 digits, range: 00 - 59
+// SS = seconds, padded to 2 digits, range: 00 - 59
+// The maximum time never exceeds 359999 (99:59:59)
+
+
+function humanReadable(seconds) {
+  if (seconds > 359999) {
+    return '99:59:59'
+  } else {
+    let sec = seconds % 60
+    let min = ((seconds - sec) % 3600) / 60
+    let hour = (seconds - min * 60 - sec) / 3600
+  
+    if (sec < 10 )sec = '0' + sec
+    if (min < 10 )min = '0' + min
+    if (hour < 10 )hour = '0' + hour
+    return `${hour}:${min}:${sec}`
+  }
 }
 
-console.log(addBinary(5, 9))
+
+console.log(humanReadable(359999))
+
 
 //***********************************************************************************************************************************
