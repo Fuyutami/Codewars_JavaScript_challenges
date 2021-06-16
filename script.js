@@ -187,23 +187,46 @@
 // The maximum time never exceeds 359999 (99:59:59)
 
 
-function humanReadable(seconds) {
-  if (seconds > 359999) {
-    return '99:59:59'
-  } else {
-    let sec = seconds % 60
-    let min = ((seconds - sec) % 3600) / 60
-    let hour = (seconds - min * 60 - sec) / 3600
+// function humanReadable(seconds) {
+//   if (seconds > 359999) {
+//     return '99:59:59'
+//   } else {
+//     let sec = seconds % 60
+//     let min = ((seconds - sec) % 3600) / 60
+//     let hour = (seconds - min * 60 - sec) / 3600
   
-    if (sec < 10 )sec = '0' + sec
-    if (min < 10 )min = '0' + min
-    if (hour < 10 )hour = '0' + hour
-    return `${hour}:${min}:${sec}`
+//     if (sec < 10 )sec = '0' + sec
+//     if (min < 10 )min = '0' + min
+//     if (hour < 10 )hour = '0' + hour
+//     return `${hour}:${min}:${sec}`
+//   }
+// }
+
+
+// console.log(humanReadable(359999))
+
+
+//***********************************************************************************************************************************
+
+
+// First non-repeating character
+
+// Write a function named first_non_repeating_letter that takes a string input, and returns the first character that is not repeated anywhere in the string.
+
+// For example, if given the input 'stress', the function should return 't', since the letter t only occurs once in the string, and occurs first in the string.
+
+// As an added challenge, upper- and lowercase letters are considered the same character, but the function should return the correct case for the initial letter. For example, the input 'sTreSS' should return 'T'.
+
+// If a string contains all repeating characters, it should return an empty string ("") or None -- see sample tests.
+
+function firstNonRepeatingLetter(s) {
+  const strLower = s.toLowerCase()
+  for (let i = 0; i < s.length; i++) {
+      if (strLower.indexOf(strLower.charAt(i)) === strLower.lastIndexOf(strLower.charAt(i))) return s.charAt(i)
   }
+  return ''
 }
 
-
-console.log(humanReadable(359999))
-
+console.log(firstNonRepeatingLetter('sTreSS'))
 
 //***********************************************************************************************************************************
