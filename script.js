@@ -219,14 +219,39 @@
 
 // If a string contains all repeating characters, it should return an empty string ("") or None -- see sample tests.
 
-function firstNonRepeatingLetter(s) {
-  const strLower = s.toLowerCase()
-  for (let i = 0; i < s.length; i++) {
-      if (strLower.indexOf(strLower.charAt(i)) === strLower.lastIndexOf(strLower.charAt(i))) return s.charAt(i)
+// function firstNonRepeatingLetter(s) {
+//   const strLower = s.toLowerCase()
+//   for (let i = 0; i < s.length; i++) {
+//       if (strLower.indexOf(strLower.charAt(i)) === strLower.lastIndexOf(strLower.charAt(i))) return s.charAt(i)
+//   }
+//   return ''
+// }
+
+// console.log(firstNonRepeatingLetter('sTreSS'))
+
+
+//***********************************************************************************************************************************
+
+
+// Find the missing letter
+
+// Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array.
+
+// You will always get an valid array. And it will be always exactly one letter be missing. The length of the array will always be at least 2.
+// The array will always contain letters in only one case.
+
+// Example:
+
+// ['a','b','c','d','f'] -> 'e' ['O','Q','R','S'] -> 'P'
+
+
+function findMissingLetter(array) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i + 1].charCodeAt(0) - array[i].charCodeAt(0) > 1) return String.fromCharCode(array[i].charCodeAt(0) +1)
   }
   return ''
 }
 
-console.log(firstNonRepeatingLetter('sTreSS'))
+console.log(findMissingLetter(['a','b','c','d','f']))
 
 //***********************************************************************************************************************************
