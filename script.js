@@ -245,13 +245,40 @@
 // ['a','b','c','d','f'] -> 'e' ['O','Q','R','S'] -> 'P'
 
 
-function findMissingLetter(array) {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i + 1].charCodeAt(0) - array[i].charCodeAt(0) > 1) return String.fromCharCode(array[i].charCodeAt(0) +1)
+// function findMissingLetter(array) {
+//   for (let i = 0; i < array.length; i++) {
+//     if (array[i + 1].charCodeAt(0) - array[i].charCodeAt(0) > 1) return String.fromCharCode(array[i].charCodeAt(0) +1)
+//   }
+//   return ''
+// }
+
+// console.log(findMissingLetter(['a','b','c','d','f']))
+
+//***********************************************************************************************************************************
+
+
+// Valid Parentheses
+
+// Write a function that takes a string of parentheses, and determines if the order of the parentheses is valid. The function should return true if the string is valid, and false if it's invalid.
+
+// Examples
+// "()"              =>  true
+// ")(()))"          =>  false
+// "("               =>  false
+// "(())((()())())"  =>  true
+// Constraints
+// 0 <= input.length <= 100
+
+function validParentheses(parens){
+  let pair = 0
+  for (let i = 0; i < parens.length; i++) {
+    if (parens.charAt(i) === '(') pair++
+    else if (parens.charAt(i) === ')') pair-- 
+    if (pair < 0) return false
   }
-  return ''
+  return pair === 0
 }
 
-console.log(findMissingLetter(['a','b','c','d','f']))
+console.log(validParentheses("(())((()())())"))
 
 //***********************************************************************************************************************************
