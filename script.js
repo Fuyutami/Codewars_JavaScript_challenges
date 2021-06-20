@@ -269,16 +269,58 @@
 // Constraints
 // 0 <= input.length <= 100
 
-function validParentheses(parens){
-  let pair = 0
-  for (let i = 0; i < parens.length; i++) {
-    if (parens.charAt(i) === '(') pair++
-    else if (parens.charAt(i) === ')') pair-- 
-    if (pair < 0) return false
+// function validParentheses(parens){
+//   let pair = 0
+//   for (let i = 0; i < parens.length; i++) {
+//     if (parens.charAt(i) === '(') pair++
+//     else if (parens.charAt(i) === ')') pair-- 
+//     if (pair < 0) return false
+//   }
+//   return pair === 0
+// }
+
+// console.log(validParentheses("(())((()())())"))
+
+
+//***********************************************************************************************************************************
+
+
+// Sum Strings as Numbers
+
+// Given the string representations of two integers, return the string representation of the sum of those integers.
+
+// For example:
+
+// sumStrings('1','2') // => '3'
+// A string representation of an integer will contain no characters besides the ten numerals "0" to "9".
+
+
+function sumStrings(a,b) {
+  let extent = 0, longerArr = [], shorterArr = [], diff = Math.abs(a.length - b.length), quotient = 0, tmp = 0
+  if (a.length > b.length) {
+    extent = a.length
+    longerArr = a.split('').map(x => +x)
+    shorterArr = b.split('').map(x => +x)
+  } else {
+    extent = b.length
+    longerArr = b.split('').map(x => +x)
+    shorterArr = a.split('').map(x => +x)
   }
-  return pair === 0
+  for (let i = extent - 1; i >= 0; i--) {
+    if (i <= longerArr.length - 1 - shorterArr.length) {
+      tmp = Math.floor((longerArr[i] + quotient ) / 10)
+      longerArr[i] = (longerArr[i] + quotient ) % 10
+      quotient = tmp
+    } else {
+      tmp = Math.floor((longerArr[i] + shorterArr[i - diff] + quotient ) / 10)
+      longerArr[i] = (longerArr[i] + shorterArr[i - diff] + quotient ) % 10 
+      quotient = tmp
+    }
+    if (i === 0 && quotient !== 0) longerArr.unshift(1)
+  }
+  return longerArr.join('').replace(/^[0]+/,'')
 }
 
-console.log(validParentheses("(())((()())())"))
+console.log(sumStrings('256', '23'))
 
 //***********************************************************************************************************************************
