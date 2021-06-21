@@ -346,11 +346,47 @@
 // ["Open", "Open", "Senior", "Open", "Open", "Senior"]
 
 
-function openOrSenior(data){
-  return data.map(([age, handicap]) => (age >= 55) && (handicap > 7) ? 'Senior' : 'Open')
+// function openOrSenior(data){
+//   return data.map(([age, handicap]) => (age >= 55) && (handicap > 7) ? 'Senior' : 'Open')
+// }
+
+// console.log(openOrSenior([[18, 20],[45, 2],[61, 12],[37, 6],[21, 21],[78, 9]]))
+
+
+//***********************************************************************************************************************************
+
+// String incrementer
+
+// Your job is to write a function which increments a string, to create a new string.
+
+// If the string already ends with a number, the number should be incremented by 1.
+// If the string does not end with a number. the number 1 should be appended to the new string.
+// Examples:
+
+// foo -> foo1
+
+// foobar23 -> foobar24
+
+// foo0042 -> foo0043
+
+// foo9 -> foo10
+
+// foo099 -> foo100
+
+// Attention: If the number has leading zeros the amount of digits should be considered.
+
+
+function incrementString (strng) {
+  const txt = strng.replace(/\d/g, '')
+  let num = strng.replace(/\D/g, '')
+  
+  num = (+('1' + num) + 1)
+  num = String(num).split('').map(x => +x)
+  num[0] > 1 ? num[0] -= 1 : num.shift()
+  
+  return txt + num.join('')
 }
 
-console.log(openOrSenior([[18, 20],[45, 2],[61, 12],[37, 6],[21, 21],[78, 9]]))
-
+console.log(incrementString('foo099'))
 
 //***********************************************************************************************************************************
