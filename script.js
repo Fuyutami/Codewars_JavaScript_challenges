@@ -376,17 +376,34 @@
 // Attention: If the number has leading zeros the amount of digits should be considered.
 
 
-function incrementString (strng) {
-  const txt = strng.replace(/\d/g, '')
-  let num = strng.replace(/\D/g, '')
+// function incrementString (strng) {
+//   const txt = strng.replace(/\d/g, '')
+//   let num = strng.replace(/\D/g, '')
   
-  num = (+('1' + num) + 1)
-  num = String(num).split('').map(x => +x)
-  num[0] > 1 ? num[0] -= 1 : num.shift()
+//   num = (+('1' + num) + 1)
+//   num = String(num).split('').map(x => +x)
+//   num[0] > 1 ? num[0] -= 1 : num.shift()
   
-  return txt + num.join('')
+//   return txt + num.join('')
+// }
+
+// console.log(incrementString('foo099'))
+
+//***********************************************************************************************************************************
+
+
+// Moving Zeros To The End
+
+// Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.
+
+// moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]
+
+var moveZeros = function (arr) {
+  const front = arr.filter(x => x !== 0)
+  const end =  arr.filter(x => x === 0)
+  return front.concat(end)
 }
 
-console.log(incrementString('foo099'))
+console.log(moveZeros([false,1,0,1,2,0,1,3,"a"]))
 
 //***********************************************************************************************************************************
