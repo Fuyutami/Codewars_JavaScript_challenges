@@ -517,23 +517,74 @@
 
 // josephus([1,2,3,4,5,6,7],3)==[3,6,2,7,5,1,4]
 
-function josephus(items,k){
-  let order = []
-  let position = 0
+// function josephus(items,k){
+//   let order = []
+//   let position = 0
 
-  while (items.length > 0) {    
-      for (let i = 1; i <= k; i++) {
-          position++
-          if (position > items.length)  position = 1   
-      }
-      console.log(position);
-      order.push(items[position - 1])
-      items.splice(position - 1, 1)
-      position--
+//   while (items.length > 0) {    
+//       for (let i = 1; i <= k; i++) {
+//           position++
+//           if (position > items.length)  position = 1   
+//       }
+//       console.log(position);
+//       order.push(items[position - 1])
+//       items.splice(position - 1, 1)
+//       position--
+//   }
+//   return order
+// }
+
+// console.log(josephus([1,2,3,4,5,6,7],3))
+
+//***********************************************************************************************************************************
+
+
+// Snail
+
+// Snail Sort
+// Given an n x n array, return the array elements arranged from outermost elements to the middle element, traveling clockwise.
+
+// array = [[1,2,3],
+//          [4,5,6],
+//          [7,8,9]]
+// snail(array) #=> [1,2,3,6,9,8,7,4,5]
+// For better understanding, please follow the numbers of the next array consecutively:
+
+// array = [[1,2,3],
+//          [8,9,4],
+//          [7,6,5]]
+// snail(array) #=> [1,2,3,4,5,6,7,8,9]
+
+// NOTE: The idea is not sort the elements from the lowest value to the highest; the idea is to traverse the 2-d array in a clockwise snailshell pattern.
+
+// NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array [[]].
+
+// ALGORITHMSARRAYS
+
+
+snail = function(array) {
+  let output = []
+      
+  while(array.length) {
+
+  output = output.concat(array.shift())
+
+  for (let i = 0; i < array.length; i++) {
+      output.push(array[i].pop())       
   }
-  return order
+    
+  if (!array.length) break
+  output = output.concat(array.pop().reverse())
+
+  for (let i = array.length - 1; i >= 0; i--) {
+      output.push(array[i].shift() )     
+  }
+}
+  return output
 }
 
-console.log(josephus([1,2,3,4,5,6,7],3))
-
+console.log(snail([[1,2,3],
+                   [8,9,4],
+                   [7,6,5]]))
+                   
 //***********************************************************************************************************************************
