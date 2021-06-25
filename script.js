@@ -562,29 +562,81 @@
 // ALGORITHMSARRAYS
 
 
-snail = function(array) {
-  let output = []
+// snail = function(array) {
+//   let output = []
       
-  while(array.length) {
+//   while(array.length) {
 
-  output = output.concat(array.shift())
+//   output = output.concat(array.shift())
 
-  for (let i = 0; i < array.length; i++) {
-      output.push(array[i].pop())       
-  }
+//   for (let i = 0; i < array.length; i++) {
+//       output.push(array[i].pop())       
+//   }
     
-  if (!array.length) break
-  output = output.concat(array.pop().reverse())
+//   if (!array.length) break
+//   output = output.concat(array.pop().reverse())
 
-  for (let i = array.length - 1; i >= 0; i--) {
-      output.push(array[i].shift() )     
+//   for (let i = array.length - 1; i >= 0; i--) {
+//       output.push(array[i].shift() )     
+//   }
+// }
+//   return output
+// }
+
+// console.log(snail([[1,2,3],
+//                    [8,9,4],
+//                    [7,6,5]]))
+       
+
+//***********************************************************************************************************************************
+
+
+// Next bigger number with the same digits
+
+// Create a function that takes a positive integer and returns the next bigger number that can be formed by rearranging its digits. For example:
+
+// 12 ==> 21
+// 513 ==> 531
+// 2017 ==> 2071
+// nextBigger(num: 12)   // returns 21
+// nextBigger(num: 513)  // returns 531
+// nextBigger(num: 2017) // returns 2071
+// If the digits can't be rearranged to form a bigger number, return -1 (or nil in Swift):
+
+// 9 ==> -1
+// 111 ==> -1
+// 531 ==> -1
+// nextBigger(num: 9)   // returns nil
+// nextBigger(num: 111) // returns nil
+// nextBigger(num: 531) // returns nil
+
+function nextBigger(n) {
+  let digits = n.toString().split('').map((x) => +x)
+  let firstSwapIndex = 0
+  let secondSwapIndex = 0
+  let found = false
+  let counter = 1
+
+  while (digits.length >= counter && !found) {
+    for (let i = digits.length - counter + 1; i <= digits.length; i++) {
+      if (digits[digits.length - counter] - digits[i] < 0) {
+        found = true
+        firstSwapIndex = digits.length - counter
+        secondSwapIndex = i
+      }
+    } counter++
+  }
+  if (firstSwapIndex !== secondSwapIndex) {
+    let tmp = digits[firstSwapIndex]
+    digits[firstSwapIndex] = digits[secondSwapIndex]
+    digits[secondSwapIndex] = tmp
+    digits = digits.slice(0, firstSwapIndex + 1).concat(digits.slice(firstSwapIndex + 1).sort((a, b) => a - b))
+    return +digits.join('')
+  } else {
+    return -1
   }
 }
-  return output
-}
 
-console.log(snail([[1,2,3],
-                   [8,9,4],
-                   [7,6,5]]))
-                   
+console.log(nextBigger(2017))
+
 //***********************************************************************************************************************************
