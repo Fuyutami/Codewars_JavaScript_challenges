@@ -610,33 +610,64 @@
 // nextBigger(num: 111) // returns nil
 // nextBigger(num: 531) // returns nil
 
-function nextBigger(n) {
-  let digits = n.toString().split('').map((x) => +x)
-  let firstSwapIndex = 0
-  let secondSwapIndex = 0
-  let found = false
-  let counter = 1
+// function nextBigger(n) {
+//   let digits = n.toString().split('').map((x) => +x)
+//   let firstSwapIndex = 0
+//   let secondSwapIndex = 0
+//   let found = false
+//   let counter = 1
 
-  while (digits.length >= counter && !found) {
-    for (let i = digits.length - counter + 1; i <= digits.length; i++) {
-      if (digits[digits.length - counter] - digits[i] < 0) {
-        found = true
-        firstSwapIndex = digits.length - counter
-        secondSwapIndex = i
-      }
-    } counter++
-  }
-  if (firstSwapIndex !== secondSwapIndex) {
-    let tmp = digits[firstSwapIndex]
-    digits[firstSwapIndex] = digits[secondSwapIndex]
-    digits[secondSwapIndex] = tmp
-    digits = digits.slice(0, firstSwapIndex + 1).concat(digits.slice(firstSwapIndex + 1).sort((a, b) => a - b))
-    return +digits.join('')
-  } else {
-    return -1
-  }
+//   while (digits.length >= counter && !found) {
+//     for (let i = digits.length - counter + 1; i <= digits.length; i++) {
+//       if (digits[digits.length - counter] - digits[i] < 0) {
+//         found = true
+//         firstSwapIndex = digits.length - counter
+//         secondSwapIndex = i
+//       }
+//     } counter++
+//   }
+//   if (firstSwapIndex !== secondSwapIndex) {
+//     let tmp = digits[firstSwapIndex]
+//     digits[firstSwapIndex] = digits[secondSwapIndex]
+//     digits[secondSwapIndex] = tmp
+//     digits = digits.slice(0, firstSwapIndex + 1).concat(digits.slice(firstSwapIndex + 1).sort((a, b) => a - b))
+//     return +digits.join('')
+//   } else {
+//     return -1
+//   }
+// }
+
+// console.log(nextBigger(2017))
+
+//***********************************************************************************************************************************
+
+
+// Perimeter of squares in a rectangle
+
+// The drawing shows 6 squares the sides of which have a length of 1, 1, 2, 3, 5, 8. It's easy to see that the sum of the perimeters of these squares is : 4 * (1 + 1 + 2 + 3 + 5 + 8) = 4 * 20 = 80
+
+// Could you give the sum of the perimeters of all the squares in a rectangle when there are n + 1 squares disposed in the same manner as in the drawing:
+
+// Hint:
+// See Fibonacci sequence
+
+// Ref:
+// http://oeis.org/A000045
+
+// The function perimeter has for parameter n where n + 1 is the number of squares (they are numbered from 0 to n) and returns the total perimeter of all the squares.
+
+// perimeter(5)  should return 80
+// perimeter(7)  should return 216
+
+function perimeter(n) {
+  let sides = []
+  
+  if (n > -2) sides.push(0)
+  if (n > -1) sides.push(1)
+  for (let i = 2; i <= n + 1; i++) sides.push(sides[i - 1] + sides[i - 2])
+  return (sides.reduce((a, b) => a + b)) * 4
 }
 
-console.log(nextBigger(2017))
+console.log(perimeter(7))
 
 //***********************************************************************************************************************************
