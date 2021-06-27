@@ -659,15 +659,54 @@
 // perimeter(5)  should return 80
 // perimeter(7)  should return 216
 
-function perimeter(n) {
-  let sides = []
+// function perimeter(n) {
+//   let sides = []
   
-  if (n > -2) sides.push(0)
-  if (n > -1) sides.push(1)
-  for (let i = 2; i <= n + 1; i++) sides.push(sides[i - 1] + sides[i - 2])
-  return (sides.reduce((a, b) => a + b)) * 4
-}
+//   if (n > -2) sides.push(0)
+//   if (n > -1) sides.push(1)
+//   for (let i = 2; i <= n + 1; i++) sides.push(sides[i - 1] + sides[i - 2])
+//   return (sides.reduce((a, b) => a + b)) * 4
+// }
 
-console.log(perimeter(7))
+// console.log(perimeter(7))
+
+//***********************************************************************************************************************************
+
+
+// Strip Comments
+
+// Complete the solution so that it strips all text that follows any of a set of comment markers passed in. Any whitespace at the end of the line should also be stripped out.
+
+// Example:
+
+// Given an input string of:
+
+// apples, pears # and bananas
+// grapes
+// bananas !apples
+// The output expected would be:
+
+// apples, pears
+// grapes
+// bananas
+// The code would be called like so:
+
+// var result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"])
+// result should == "apples, pears\ngrapes\nbananas"
+
+function solution(input, markers) {
+  
+  const lines = input.split('\n')
+  
+  for (let i = 0; i < lines.length; i++) {
+        for (let j = 0; j < markers.length; j++) {
+            const marker = lines[i].indexOf(markers[j])
+            if (marker + 1) lines[i] = lines[i].slice(0, marker).trim()
+        }
+  }
+  return lines.join('\n')
+};
+
+console.log(solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"]))
 
 //***********************************************************************************************************************************
