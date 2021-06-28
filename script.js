@@ -694,19 +694,61 @@
 // var result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"])
 // result should == "apples, pears\ngrapes\nbananas"
 
-function solution(input, markers) {
+// function solution(input, markers) {
   
-  const lines = input.split('\n')
+//   const lines = input.split('\n')
   
-  for (let i = 0; i < lines.length; i++) {
-        for (let j = 0; j < markers.length; j++) {
-            const marker = lines[i].indexOf(markers[j])
-            if (marker + 1) lines[i] = lines[i].slice(0, marker).trim()
-        }
-  }
-  return lines.join('\n')
-};
+//   for (let i = 0; i < lines.length; i++) {
+//         for (let j = 0; j < markers.length; j++) {
+//             const marker = lines[i].indexOf(markers[j])
+//             if (marker + 1) lines[i] = lines[i].slice(0, marker).trim()
+//         }
+//   }
+//   return lines.join('\n')
+// };
 
-console.log(solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"]))
+// console.log(solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"]))
+
+//***********************************************************************************************************************************
+
+
+// Removing Internal Vertices
+
+// Removing Internal Vertices
+// A two dimensional mesh can be defined by a list of triangles. These triangles are references (by index) to vertices; positions in 2D space.
+
+// Here is such a mesh:
+
+
+// Task
+// For this task, you will be given only the triangles of a mesh as input. This will be a list of items each containing 3 integers (C#: ValueTuples, JavaScript: Array, Python: tuples), where each of the 3 integers is the index of a vertex in the mesh. From this data alone, you must return a list only containing points along the outline of the mesh - any vertex inside the mesh must be removed:
+
+
+// The red vertices should be removed, while the green ones should be kept. Thus, the correct output would be:
+
+// {0, 1, 2, 5, 6, 9, 10}
+
+// Notes
+// A vertex is considered external if it would lie on the edge of the silhouette of the mesh, so if there is a hole in the middle of the mesh, any vertices around that hole are also considered external.
+
+// The output should be sorted in ascending order
+
+// The mesh given in the input can always be arranged without triangles intersecting each other
+
+// You will never be given an invalid input
+
+
+const removeInternal = (...triangles) => {
+  let vectors = []
+   triangles.forEach(triangle => vectors.push([triangle[0], triangle[1]], [triangle[0], triangle[2]],[triangle[1], triangle[2]]))
+   vectors.forEach(vector => vector.sort((a, b) => a - b))
+   vectors = (vectors.map(x => x.join('-')))
+   vectors = vectors.filter(x => vectors.indexOf(x) === vectors.lastIndexOf(x))
+   return  [...new Set([].concat.apply([], vectors.map(x => x.split('-'))).map(x => +x))].sort((a, b) => a - b)
+}
+
+
+console.log(removeInternal([0, 2, 1], [3, 2, 1], [4, 2, 3], [0, 2, 4]))
+
 
 //***********************************************************************************************************************************
