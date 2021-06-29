@@ -738,17 +738,60 @@
 // You will never be given an invalid input
 
 
-const removeInternal = (...triangles) => {
-  let vectors = []
-   triangles.forEach(triangle => vectors.push([triangle[0], triangle[1]], [triangle[0], triangle[2]],[triangle[1], triangle[2]]))
-   vectors.forEach(vector => vector.sort((a, b) => a - b))
-   vectors = (vectors.map(x => x.join('-')))
-   vectors = vectors.filter(x => vectors.indexOf(x) === vectors.lastIndexOf(x))
-   return  [...new Set([].concat.apply([], vectors.map(x => x.split('-'))).map(x => +x))].sort((a, b) => a - b)
-}
+// const removeInternal = (...triangles) => {
+//   let vectors = []
+//    triangles.forEach(triangle => vectors.push([triangle[0], triangle[1]], [triangle[0], triangle[2]],[triangle[1], triangle[2]]))
+//    vectors.forEach(vector => vector.sort((a, b) => a - b))
+//    vectors = (vectors.map(x => x.join('-')))
+//    vectors = vectors.filter(x => vectors.indexOf(x) === vectors.lastIndexOf(x))
+//    return  [...new Set([].concat.apply([], vectors.map(x => x.split('-'))).map(x => +x))].sort((a, b) => a - b)
+// }
 
 
-console.log(removeInternal([0, 2, 1], [3, 2, 1], [4, 2, 3], [0, 2, 4]))
+// console.log(removeInternal([0, 2, 1], [3, 2, 1], [4, 2, 3], [0, 2, 4]))
 
+
+//***********************************************************************************************************************************
+
+
+// Poker cards encoder/decoder
+
+
+// Consider a deck of 52 cards, which are represented by a string containing their suit and face value.
+
+// Your task is to write two functions encode and decode that translate an array of cards to/from an array of integer codes.
+
+// function encode :
+
+// input : array of strings (symbols)
+
+// output : array of integers (codes) sorted in ascending order
+
+// function decode :
+
+// input : array of integers (codes)
+
+// output : array of strings (symbols) sorted by code values
+
+// ['Ac', 'Ks', '5h', 'Td', '3c'] -> [0, 2 ,22, 30, 51] //encoding
+// [0, 51, 30, 22, 2] -> ['Ac', '3c', 'Td', '5h', 'Ks'] //decoding
+// The returned array must be sorted from lowest to highest priority (value or precedence order, see below).
+
+
+const translation = ['Ac', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', 'Tc', 'Jc', 'Qc', 'Kc',
+                     'Ad', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'Td', 'Jd', 'Qd', 'Kd',
+                     'Ah', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', 'Th', 'Jh', 'Qh', 'Kh',
+                     'As', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', 'Ts', 'Js', 'Qs', 'Ks']
+
+function encode (input) {
+    return input.map(x => translation.indexOf(x)).sort((a, b) => a - b)
+  }
+  
+  function decode (input) {
+    return input.sort((a,b) => a - b).map(x => translation[x])
+  }
+
+  console.log(encode(['Ac', 'Ks', '5h', 'Td', '3c']))
+  console.log(decode([0, 51, 30, 22, 2]))
 
 //***********************************************************************************************************************************
