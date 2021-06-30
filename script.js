@@ -778,20 +778,133 @@
 // The returned array must be sorted from lowest to highest priority (value or precedence order, see below).
 
 
-const translation = ['Ac', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', 'Tc', 'Jc', 'Qc', 'Kc',
-                     'Ad', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'Td', 'Jd', 'Qd', 'Kd',
-                     'Ah', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', 'Th', 'Jh', 'Qh', 'Kh',
-                     'As', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', 'Ts', 'Js', 'Qs', 'Ks']
+// const translation = ['Ac', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', 'Tc', 'Jc', 'Qc', 'Kc',
+//                      'Ad', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'Td', 'Jd', 'Qd', 'Kd',
+//                      'Ah', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', 'Th', 'Jh', 'Qh', 'Kh',
+//                      'As', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', 'Ts', 'Js', 'Qs', 'Ks']
 
-function encode (input) {
-    return input.map(x => translation.indexOf(x)).sort((a, b) => a - b)
-  }
+// function encode (input) {
+//     return input.map(x => translation.indexOf(x)).sort((a, b) => a - b)
+//   }
   
-  function decode (input) {
-    return input.sort((a,b) => a - b).map(x => translation[x])
+//   function decode (input) {
+//     return input.sort((a,b) => a - b).map(x => translation[x])
+//   }
+
+//   console.log(encode(['Ac', 'Ks', '5h', 'Td', '3c']))
+//   console.log(decode([0, 51, 30, 22, 2]))
+
+//***********************************************************************************************************************************
+
+
+// Chinese Numeral Encoder
+
+// Create a function that takes a Number as its argument and returns a Chinese numeral string. You don't need to validate the input argument, it will always be a Number in the range [-99999.999, 99999.999], rounded to 8 decimal places.
+
+// Simplified Chinese numerals have characters representing each number from 0 to 9 and additional numbers representing larger numbers like 10, 100, 1000, and 10000.
+
+// 0 líng 零
+// 1 yī 一
+// 2 èr 二
+// 3 sān 三
+// 4 sì 四
+// 5 wǔ 五
+// 6 liù 六
+// 7 qī 七
+// 8 bā 八
+// 9 jiǔ 九
+// 10 shí 十
+// 100 bǎi 百
+// 1000 qiān 千
+// 10000 wàn 万
+// Multiple-digit numbers are constructed by first the digit value (1 to 9) and then the place multiplier (such as 10, 100, 1000), starting with the most significant digit. A special case is made for 10 - 19 where the leading digit value (yī 一) is dropped. Note that this special case is only made for the actual values 10 - 19, not any larger values.
+
+// 10 十
+// 11 十一
+// 18 十八
+// 21 二十一
+// 110 一百一十
+// 123 一百二十三
+// 24681 二万四千六百八十一
+// Trailing zeros are omitted, but interior zeros are grouped together and indicated by a single 零 character without giving the place multiplier.
+
+// 10 十
+// 20 二十
+// 104 一百零四
+// 1004 一千零四
+// 10004 一万零四
+// 10000 一万
+// Decimal numbers are constructed by first writing the whole number part, and then inserting a point (diǎn 点), followed by the decimal portion. The decimal portion is expressed using only the digits 0 to 9, without any positional characters and without grouping zeros.
+
+// 0.1 零点一
+// 123.45 一百二十三点四五
+// Negative numbers are the same as other numbers, but add a 负 (fù) before the number.
+
+
+function toChineseNumeral(num) {
+  var numerals = {
+    '-': '负',
+    '.': '点',
+    0: '零',
+    1: '一',
+    2: '二',
+    3: '三',
+    4: '四',
+    5: '五',
+    6: '六',
+    7: '七',
+    8: '八',
+    9: '九',
+    10: '十',
+    100: '百',
+    1000: '千',
+    10000: '万',
   }
 
-  console.log(encode(['Ac', 'Ks', '5h', 'Td', '3c']))
-  console.log(decode([0, 51, 30, 22, 2]))
+  const negative = num < 0
+  let whole = String(Math.abs(Math.trunc(num)))
+  let decimal = num % 1 !== 0 ? String(num).split('.')[1] : ''
 
+  // if negative number add sign
+  let output = negative ? numerals['-'] : ''
+
+  // add whole part
+  if (+whole === 0) output += numerals['0']
+  else if (+whole === 10) output += numerals['10']
+  else if (+whole > 10 && +whole < 20) {
+    output += numerals['10'] + numerals[String(whole)[1]]
+  } else {
+    for (let i = whole.length; i >= 1; i--) {
+      let multiplier = numerals[String(Math.pow(10, i - 1))]
+      if (whole[whole.length - i] === '0') {
+        output += numerals['0']
+        continue
+      }
+      if (i === 1) multiplier = ''
+      output += numerals[String(whole[whole.length - i])] + multiplier
+    }
+    // remove repeating zeros i a whole part
+    output = output
+      .split(numerals['0'])
+      .filter((x) => x.length > 0)
+      .join(numerals['0'])
+  }
+
+  // add decimal part if needed
+  if (decimal) {
+    output += numerals['.']
+    for (let i = 0; i < decimal.length; i++) {
+      output += numerals[decimal[i]]
+    }
+  }
+
+  // remove trailing zeros
+  const regex = new RegExp(`${numerals['0']}+$`)
+  output = output.replace(regex, '')
+
+  return output
+}
+
+
+console.log(toChineseNumeral(123.45))
 //***********************************************************************************************************************************
