@@ -841,70 +841,118 @@
 // Negative numbers are the same as other numbers, but add a 负 (fù) before the number.
 
 
-function toChineseNumeral(num) {
-  var numerals = {
-    '-': '负',
-    '.': '点',
-    0: '零',
-    1: '一',
-    2: '二',
-    3: '三',
-    4: '四',
-    5: '五',
-    6: '六',
-    7: '七',
-    8: '八',
-    9: '九',
-    10: '十',
-    100: '百',
-    1000: '千',
-    10000: '万',
+// function toChineseNumeral(num) {
+//   var numerals = {
+//     '-': '负',
+//     '.': '点',
+//     0: '零',
+//     1: '一',
+//     2: '二',
+//     3: '三',
+//     4: '四',
+//     5: '五',
+//     6: '六',
+//     7: '七',
+//     8: '八',
+//     9: '九',
+//     10: '十',
+//     100: '百',
+//     1000: '千',
+//     10000: '万',
+//   }
+
+//   const negative = num < 0
+//   let whole = String(Math.abs(Math.trunc(num)))
+//   let decimal = num % 1 !== 0 ? String(num).split('.')[1] : ''
+
+//   // if negative number add sign
+//   let output = negative ? numerals['-'] : ''
+
+//   // add whole part
+//   if (+whole === 0) output += numerals['0']
+//   else if (+whole === 10) output += numerals['10']
+//   else if (+whole > 10 && +whole < 20) {
+//     output += numerals['10'] + numerals[String(whole)[1]]
+//   } else {
+//     for (let i = whole.length; i >= 1; i--) {
+//       let multiplier = numerals[String(Math.pow(10, i - 1))]
+//       if (whole[whole.length - i] === '0') {
+//         output += numerals['0']
+//         continue
+//       }
+//       if (i === 1) multiplier = ''
+//       output += numerals[String(whole[whole.length - i])] + multiplier
+//     }
+//     // remove repeating zeros i a whole part
+//     output = output
+//       .split(numerals['0'])
+//       .filter((x) => x.length > 0)
+//       .join(numerals['0'])
+//   }
+
+//   // add decimal part if needed
+//   if (decimal) {
+//     output += numerals['.']
+//     for (let i = 0; i < decimal.length; i++) {
+//       output += numerals[decimal[i]]
+//     }
+//   }
+
+//   // remove trailing zeros
+//   const regex = new RegExp(`${numerals['0']}+$`)
+//   output = output.replace(regex, '')
+
+//   return output
+// }
+
+
+// console.log(toChineseNumeral(123.45))
+
+//***********************************************************************************************************************************
+
+
+// Most frequently used words in a text
+
+// Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
+
+// Assumptions:
+// A word is a string of letters (A to Z) optionally containing one or more apostrophes (') in ASCII. (No need to handle fancy punctuation.)
+// Matches should be case-insensitive, and the words in the result should be lowercased.
+// Ties may be broken arbitrarily.
+// If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+// Examples:
+// top_3_words("In a village of La Mancha, the name of which I have no desire to call to
+// mind, there lived not long since one of those gentlemen that keep a lance
+// in the lance-rack, an old buckler, a lean hack, and a greyhound for
+// coursing. An olla of rather more beef than mutton, a salad on most
+// nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
+// on Sundays, made away with three-quarters of his income.")
+// # => ["a", "of", "on"]
+
+// top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e")
+// # => ["e", "ddd", "aa"]
+
+// top_3_words("  //wont won't won't")
+// # => ["won't", "wont"]
+
+
+function topThreeWords(text) {
+  const words = text.replace(/[\n!"#$%&()*+,-./:;<=>?@\]\[^_`{|}~]/g,'').toLowerCase().split(' ').sort()
+  let uniqueWords = []
+  let counter = 1
+
+  for (let i = 0; i < words.length; i++) {
+      if (words[i] === '' || words[i] === "'") continue
+      else if (words[i] === words[i + 1]) counter++
+      else  {
+          uniqueWords.push([words[i], counter])
+          counter = 1
+      }  
   }
-
-  const negative = num < 0
-  let whole = String(Math.abs(Math.trunc(num)))
-  let decimal = num % 1 !== 0 ? String(num).split('.')[1] : ''
-
-  // if negative number add sign
-  let output = negative ? numerals['-'] : ''
-
-  // add whole part
-  if (+whole === 0) output += numerals['0']
-  else if (+whole === 10) output += numerals['10']
-  else if (+whole > 10 && +whole < 20) {
-    output += numerals['10'] + numerals[String(whole)[1]]
-  } else {
-    for (let i = whole.length; i >= 1; i--) {
-      let multiplier = numerals[String(Math.pow(10, i - 1))]
-      if (whole[whole.length - i] === '0') {
-        output += numerals['0']
-        continue
-      }
-      if (i === 1) multiplier = ''
-      output += numerals[String(whole[whole.length - i])] + multiplier
-    }
-    // remove repeating zeros i a whole part
-    output = output
-      .split(numerals['0'])
-      .filter((x) => x.length > 0)
-      .join(numerals['0'])
-  }
-
-  // add decimal part if needed
-  if (decimal) {
-    output += numerals['.']
-    for (let i = 0; i < decimal.length; i++) {
-      output += numerals[decimal[i]]
-    }
-  }
-
-  // remove trailing zeros
-  const regex = new RegExp(`${numerals['0']}+$`)
-  output = output.replace(regex, '')
-
-  return output
+  return uniqueWords.sort((a, b) => b[1] - a[1]).map(x => x[0]).slice(0, 3)
 }
 
 
-console.log(toChineseNumeral(123.45))
+console.log(topThreeWords("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e"))
+
 //***********************************************************************************************************************************
