@@ -936,23 +936,93 @@
 // # => ["won't", "wont"]
 
 
-function topThreeWords(text) {
-  const words = text.replace(/[\n!"#$%&()*+,-./:;<=>?@\]\[^_`{|}~]/g,'').toLowerCase().split(' ').sort()
-  let uniqueWords = []
-  let counter = 1
+// function topThreeWords(text) {
+//   const words = text.replace(/[\n!"#$%&()*+,-./:;<=>?@\]\[^_`{|}~]/g,'').toLowerCase().split(' ').sort()
+//   let uniqueWords = []
+//   let counter = 1
 
-  for (let i = 0; i < words.length; i++) {
-      if (words[i] === '' || words[i] === "'") continue
-      else if (words[i] === words[i + 1]) counter++
-      else  {
-          uniqueWords.push([words[i], counter])
-          counter = 1
-      }  
+//   for (let i = 0; i < words.length; i++) {
+//       if (words[i] === '' || words[i] === "'") continue
+//       else if (words[i] === words[i + 1]) counter++
+//       else  {
+//           uniqueWords.push([words[i], counter])
+//           counter = 1
+//       }  
+//   }
+//   return uniqueWords.sort((a, b) => b[1] - a[1]).map(x => x[0]).slice(0, 3)
+// }
+
+
+// console.log(topThreeWords("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e"))
+
+//***********************************************************************************************************************************
+
+
+// Roman Numeral Helper
+
+// Create a RomanNumerals class that can convert a roman numeral to and from an integer value. It should follow the API demonstrated in the examples below. Multiple roman numeral values will be tested for each helper method.
+
+// Modern Roman numerals are written by expressing each digit separately starting with the left most digit and skipping any digit with a value of zero. In Roman numerals 1990 is rendered: 1000=M, 900=CM, 90=XC; resulting in MCMXC. 2008 is written as 2000=MM, 8=VIII; or MMVIII. 1666 uses each Roman symbol in descending order: MDCLXVI.
+
+// Examples
+// RomanNumerals.toRoman(1000); // should return 'M'
+// RomanNumerals.fromRoman('M'); // should return 1000
+
+const RomanNumerals = {
+  translation: {
+      M: 1000,
+      CM: 900,
+      D: 500,
+      CD: 400,
+      C: 100,
+      XC: 90,
+      L: 50,
+      XL: 40,
+      X: 10,
+      IX: 9,
+      V: 5,
+      IV: 4,
+      I: 1
+  },
+
+  toRoman(input) {
+      let tmp, output = ''
+      for (const value of Object.values(this.translation)) {
+          tmp = Math.floor(input / value)
+          for (let i = 0; i < tmp; i++) {
+              output += Object.keys(this.translation).find(key => this.translation[key] === value)
+              input -= value
+          }
+      }
+      return output
+  },
+
+  fromRoman(input) {
+      let tmp=0, output=0
+      for (let i = 0; i < input.length; i++) {
+          const current = this.translation[input[i]]
+          const next = this.translation[input[i+1]]
+          tmp += current
+          if(next) {
+            if (current === next) continue
+            else if (current < next) {
+              output += (next - tmp)
+              i++
+              tmp = 0
+            }
+            else if (current > next) {
+                output += tmp
+                tmp = 0
+            }
+          } else {
+              output += tmp
+          }
+      }
+      return output
   }
-  return uniqueWords.sort((a, b) => b[1] - a[1]).map(x => x[0]).slice(0, 3)
 }
 
-
-console.log(topThreeWords("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e"))
+console.log(RomanNumerals.toRoman(1000))
+console.log(RomanNumerals.fromRoman('M'))
 
 //***********************************************************************************************************************************
