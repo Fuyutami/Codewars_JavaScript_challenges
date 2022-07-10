@@ -7,12 +7,34 @@
 # ***********************************************************************************************************************************
 # ***********************************************************************************************************************************
 
+# The Hashtag Generator
+# difficulty: 5kyu
+
+# The marketing team is spending way too much time typing in hashtags.
+# Let's help them with our own Hashtag Generator!
+
+# Here's the deal:
+
+# It must start with a hashtag (#).
+# All words must have their first letter capitalized.
+# If the final result is longer than 140 chars it must return false.
+# If the input or the result is an empty string it must return false.
+
+def generate_hashtag(s):
+    return f"#{''.join([w.title() for w in s.strip().split(' ')])}" if len(''.join(s)) < 140 and s!= '' else False
+
+print(generate_hashtag(""))
+
+
+# ***********************************************************************************************************************************
+
 # Replace With Alphabet Position
 # difficulty: 6kyu
 
 # In this kata you are required to, given a string,
 # replace every letter with its position in the alphabet.
 # If anything in the text isn't a letter, ignore it and don't return it.
+
 
 def alphabet_position(text):
     output = ''
